@@ -20,19 +20,17 @@ function App() {
         </p>
         <a
           className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
+          href="/firstpage"
           rel="noopener noreferrer"
         >
-          Learn React
+          First page
         </a>
         <a
           className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
+          href="/secondpage"
           rel="noopener noreferrer"
         >
-          Learn TanStack
+          Second page
         </a>
         <Button>Click me!</Button>
       </header>
