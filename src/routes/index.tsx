@@ -19,10 +19,10 @@ function App() {
         </p>
         <a
           className="text-[#61dafb] hover:underline"
-          href="/firstpage"
+          href="/mastermind"
           rel="noopener noreferrer"
         >
-          First page
+          Mastermind
         </a>
         <a
           className="text-[#61dafb] hover:underline"
