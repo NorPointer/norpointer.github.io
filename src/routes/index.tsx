@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import logo from '../logo.svg'
-import { Button } from '@/components/ui/button'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -32,7 +31,13 @@ function App() {
         >
           Second page
         </a>
-        <Button>Click me!</Button>
+        <a
+          className="text-[#61dafb] hover:underline"
+          href="/thirdpage"
+          rel="noopener noreferrer"
+        >
+          Third page
+        </a>
       </header>
     </div>
   )

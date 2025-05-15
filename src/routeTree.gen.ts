@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as ThirdpageIndexImport } from './routes/thirdpage/index'
 import { Route as SecondpageIndexImport } from './routes/secondpage/index'
 import { Route as FirstpageIndexImport } from './routes/firstpage/index'
 
@@ -20,6 +21,12 @@ import { Route as FirstpageIndexImport } from './routes/firstpage/index'
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ThirdpageIndexRoute = ThirdpageIndexImport.update({
+  id: '/thirdpage/',
+  path: '/thirdpage/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecondpageIndexImport
       parentRoute: typeof rootRoute
     }
+    '/thirdpage/': {
+      id: '/thirdpage/'
+      path: '/thirdpage'
+      fullPath: '/thirdpage'
+      preLoaderRoute: typeof ThirdpageIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +83,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/firstpage': typeof FirstpageIndexRoute
   '/secondpage': typeof SecondpageIndexRoute
+  '/thirdpage': typeof ThirdpageIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/firstpage': typeof FirstpageIndexRoute
   '/secondpage': typeof SecondpageIndexRoute
+  '/thirdpage': typeof ThirdpageIndexRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +98,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/firstpage/': typeof FirstpageIndexRoute
   '/secondpage/': typeof SecondpageIndexRoute
+  '/thirdpage/': typeof ThirdpageIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/firstpage' | '/secondpage'
+  fullPaths: '/' | '/firstpage' | '/secondpage' | '/thirdpage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/firstpage' | '/secondpage'
-  id: '__root__' | '/' | '/firstpage/' | '/secondpage/'
+  to: '/' | '/firstpage' | '/secondpage' | '/thirdpage'
+  id: '__root__' | '/' | '/firstpage/' | '/secondpage/' | '/thirdpage/'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +114,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FirstpageIndexRoute: typeof FirstpageIndexRoute
   SecondpageIndexRoute: typeof SecondpageIndexRoute
+  ThirdpageIndexRoute: typeof ThirdpageIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FirstpageIndexRoute: FirstpageIndexRoute,
   SecondpageIndexRoute: SecondpageIndexRoute,
+  ThirdpageIndexRoute: ThirdpageIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/firstpage/",
-        "/secondpage/"
+        "/secondpage/",
+        "/thirdpage/"
       ]
     },
     "/": {
@@ -128,6 +148,9 @@ export const routeTree = rootRoute
     },
     "/secondpage/": {
       "filePath": "secondpage/index.tsx"
+    },
+    "/thirdpage/": {
+      "filePath": "thirdpage/index.tsx"
     }
   }
 }
