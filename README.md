@@ -1,3 +1,3 @@
 MiniGames
 
-Anmol er treig som vanlig
+Ole er treig som vanlig
