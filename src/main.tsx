@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { RouterProvider, createRouter, createHashHistory } from '@tanstack/react-router'
+const hashHistory = createHashHistory();
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -10,6 +11,7 @@ import reportWebVitals from './reportWebVitals.ts'
 
 // Create a new router instance
 const router = createRouter({
+  history: hashHistory,
   routeTree,
   context: {},
   defaultPreload: 'intent',
