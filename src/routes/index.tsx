@@ -19,21 +19,21 @@ function App() {
         </p>
         <a
           className="text-[#61dafb] hover:underline"
-          href="/mastermind"
+          href="/#/mastermind"
           rel="noopener noreferrer"
         >
           Mastermind
         </a>
         <a
           className="text-[#61dafb] hover:underline"
-          href="/secondpage"
+          href="/#/secondpage"
           rel="noopener noreferrer"
         >
           Second page
         </a>
         <a
           className="text-[#61dafb] hover:underline"
-          href="/thirdpage"
+          href="/#/thirdpage"
           rel="noopener noreferrer"
         >
           Third page
