@@ -111,7 +111,7 @@ function Mastermind() {
           disabled={finished}
           value={guessInput}
           onChange={(e) => {
-            const onlyNums = e.target.value.replace(/\D/g, '');
+            const onlyNums = e.target.value.replace(/[^0-5]/g,'');
             setGuessInput(onlyNums);
           }}
         />
