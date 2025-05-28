@@ -14,9 +14,6 @@ function App() {
           className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite] rounded-full"
           alt="logo"
         />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
-        </p>
         <a
           className="text-[#61dafb] hover:underline"
           href="/#/mastermind"
