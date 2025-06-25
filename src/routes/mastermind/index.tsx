@@ -88,46 +88,53 @@ function Mastermind() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-      <p>Welcome to Mastermind</p>
-      <p>please guess</p>
-      <div className="flex flex-col pb-2">
-        {guesses.map((guess, i) => (
-          <div key={i} className="flex justify-center">
-            <span className="text-gray-400 pr-2">{guess.code}</span>
-            <span className="pr-2">{guess.whites}</span>
-            <span className="text-red-600">{guess.reds}</span>
+    <div className="min-h-screen flex flex-col items-center justify-between bg-[#282c34] text-white text-[calc(10px+2vmin)]">
+      <div>
+        <div className="pt-30">
+          <p>Mastermind</p>
+        </div>
+      </div>
+      <div>
+        <div className="pb-40">
+          <div className="flex flex-col pb-2">
+            {guesses.map((guess, i) => (
+              <div key={i} className="flex justify-center">
+                <span className="text-gray-400 pr-2">{guess.code}</span>
+                <span className="pr-2">{guess.whites}</span>
+                <span className="text-red-600">{guess.reds}</span>
+              </div>
+            ))}
           </div>
-        ))}
+          <div className="pb-2">
+            <Input
+              className="bg-[]"
+              type="text"
+              id="guessInput"
+              minLength={4}
+              maxLength={4}
+              size={10}
+              disabled={finished}
+              value={guessInput}
+              onChange={(e) => {
+                const onlyNums = e.target.value.replace(/[^0-5]/g, '');
+                setGuessInput(onlyNums);
+              }}
+            />
+          </div>
+          <Button disabled={finished} onClick={handleGuess}>
+            Guess
+          </Button>
+          {finished ? (
+            won ? (
+              <div>Smart! You won in {guesses.length} guesses :D</div>
+            ) : (
+              <div>Stupid! You lost XD</div>
+            )
+          ) : (
+            <div></div>
+          )}
+        </div>
       </div>
-      <div className="pb-2">
-        <Input
-          className="bg-[]"
-          type="text"
-          id="guessInput"
-          minLength={4}
-          maxLength={4}
-          size={10}
-          disabled={finished}
-          value={guessInput}
-          onChange={(e) => {
-            const onlyNums = e.target.value.replace(/[^0-5]/g,'');
-            setGuessInput(onlyNums);
-          }}
-        />
-      </div>
-      <Button disabled={finished} onClick={handleGuess}>
-        Guess
-      </Button>
-      {finished ? (
-        won ? (
-          <div>Smart! You won in {guesses.length} guesses :D</div>
-        ) : (
-          <div>Stupid! You lost XD</div>
-        )
-      ) : (
-        <div></div>
-      )}
     </div>
   );
 }
