@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/thirdpage/')({
@@ -5,5 +6,10 @@ export const Route = createFileRoute('/thirdpage/')({
 });
 
 function RouteComponent() {
-  return <div>Anmol's page!</div>;
+  return (
+    <div>
+      <div>CEO's page!</div>
+      <Button variant="primary">Click me</Button>
+    </div>
+  );
 }
