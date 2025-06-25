@@ -5,5 +5,5 @@ export const Route = createFileRoute('/secondpage/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/secondpage"!</div>
+  return <div>Oles page!</div>
 }
