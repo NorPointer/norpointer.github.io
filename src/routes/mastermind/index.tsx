@@ -19,7 +19,7 @@ const availableColors = [
 ];
 
 type Guess = {
-  code: string;
+  code: Array<number>;
   whites: number;
   reds: number;
 };
@@ -30,8 +30,6 @@ function Mastermind() {
   const maxGuesses = 12;
 
   const [code, _] = useState<Array<number>>(getRandomCode(codeLength));
-  const [guessInput, setGuessInput] = useState('');
-  setGuessInput('');
   const [currentGuess, setCurrentGuess] = useState<Array<number | null>>([
     null,
     null,
@@ -70,7 +68,9 @@ function Mastermind() {
   }
 
   function handleGuess() {
-    const guess = guessInput.split('').map((e) => Number(e));
+    if (currentGuess.indexOf(null)>=0)
+      return;
+    const guess = currentGuess as Array<number>;
     const redsCount = guess
       .map((num, i): number => (num === code[i] ? 1 : 0))
       .reduce((sum, a) => sum + a, 0);
@@ -90,7 +90,7 @@ function Mastermind() {
 
     setGuesses([
       ...guesses,
-      { code: guessInput, whites: whitesCount, reds: redsCount },
+      { code: guess, whites: whitesCount, reds: redsCount },
     ]);
   }
 
