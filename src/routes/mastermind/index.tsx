@@ -1,20 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import ColorPeg from '../../components/mastermind/ColorPeg';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 
 export const Route = createFileRoute('/mastermind/')({
   component: Mastermind,
 });
 
-enum MastermindColors {
-  Blue,
-  Green,
-  Yellow,
-  Red,
-  Pink,
-  Purple,
-}
+// Define the available colors for the game
+const availableColors = [
+  'bg-red-600',
+  'bg-green-600',
+  'bg-blue-600',
+  'bg-yellow-400',
+  'bg-orange-600',
+  'bg-purple-600',
+];
 
 type Guess = {
   code: string;
@@ -27,10 +29,15 @@ function Mastermind() {
   const codeLength = 4;
   const maxGuesses = 12;
 
-  const [code, _] = useState<Array<MastermindColors>>(
-    getRandomCode(codeLength),
-  );
+  const [code, _] = useState<Array<number>>(getRandomCode(codeLength));
   const [guessInput, setGuessInput] = useState('');
+  setGuessInput('');
+  const [currentGuess, setCurrentGuess] = useState<Array<number | null>>([
+    null,
+    null,
+    null,
+    null,
+  ]);
   const [guesses, setGuesses] = useState<Array<Guess>>([]);
   const [finished, setFinished] = useState(false);
   const [won, setWon] = useState(false);
@@ -43,8 +50,8 @@ function Mastermind() {
     return Math.floor(Math.random() * max);
   }
 
-  function getRandomCode(length: number): Array<MastermindColors> {
-    const randomCode: Array<MastermindColors> = [];
+  function getRandomCode(length: number): Array<number> {
+    const randomCode: Array<number> = [];
     for (let i = 0; i < length; i++) {
       randomCode.push(randIntMax(numColors));
     }
@@ -87,16 +94,29 @@ function Mastermind() {
     ]);
   }
 
+  function handleSetPin(pin: number) {
+    const index = currentGuess.indexOf(null);
+    if (index === -1) return;
+    const newCurrentGuess = currentGuess;
+    newCurrentGuess[index] = pin;
+    setCurrentGuess([...newCurrentGuess]);
+  }
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-      <div>
-        <div className="pt-30">
-          <p>Mastermind</p>
-        </div>
+    <div className="min-h-screen flex flex-col items-center justify-between bg-[#282c34] text-white font-inter p-4 sm:p-6 md:p-8">
+      {/* Title */}
+      <div className="mb-8 mt-4">
+        <p className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 rounded-md">
+          Mastermind
+        </p>
       </div>
-      <div>
-        <div className="pb-40">
-          <div className="flex flex-col pb-2">
+
+      {/* Main game area */}
+      <div className="flex flex-col lg:flex-row items-center justify-center lg:space-x-8 w-full max-w-6xl">
+        {/* Game board */}
+        <Card className="p-4">
+          {/* Previous guesses */}
+          <div className="flex flex-col-reverse justify-end min-h-[400px] max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
             {guesses.map((guess, i) => (
               <div key={i} className="flex justify-center">
                 <span className="text-gray-400 pr-2">{guess.code}</span>
@@ -105,21 +125,19 @@ function Mastermind() {
               </div>
             ))}
           </div>
-          <div className="pb-2">
-            <Input
-              className="bg-[]"
-              type="text"
-              id="guessInput"
-              minLength={4}
-              maxLength={4}
-              size={10}
-              disabled={finished}
-              value={guessInput}
-              onChange={(e) => {
-                const onlyNums = e.target.value.replace(/[^0-5]/g, '');
-                setGuessInput(onlyNums);
-              }}
-            />
+
+          {/* Current guess input area */}
+          <div className="flex">
+            {currentGuess.map((e) => (
+              <ColorPeg
+                key={1}
+                color={`${e !== null ? availableColors[e] : 'bg-gray-800'}`}
+                size="h-12 w-12"
+                onClick={() => {}}
+                cursor={e !== null}
+                className="mx-2"
+              />
+            ))}
           </div>
           <Button disabled={finished} onClick={handleGuess}>
             Guess
@@ -133,6 +151,27 @@ function Mastermind() {
           ) : (
             <div></div>
           )}
+        </Card>
+
+        {/* Color palette on right */}
+        <div className="flex flex-col items-center bg-gray-900 p-6 rounded-xl shadow-lg mt-8 lg:mt-0">
+          <p className="text-lg font-semibold mb-4 text-gray-300">
+            Available Colors
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-4">
+            {availableColors.map((color, index) => (
+              <ColorPeg
+                key={index}
+                color={color}
+                size="h-12 w-12"
+                onClick={() => {
+                  handleSetPin(index);
+                }}
+                cursor
+                className="hover:scale-110 active:scale-95 transform transition-transform duration-100"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
