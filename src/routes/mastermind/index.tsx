@@ -145,6 +145,8 @@ function Mastermind() {
                     className="mx-2"
                   />
                 ))}
+                <span className="pr-2">{guess.whites}</span>
+                <span className="text-red-600">{guess.reds}</span>
               </div>
             ))}
             {[...Array(maxGuesses - guesses.length)].map((_, i) => (
