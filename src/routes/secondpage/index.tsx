@@ -6,12 +6,12 @@ export const Route = createFileRoute('/secondpage/')({
 
 const getPokemon = async (pokeNumber: number) => {
   const baseUrl = "https://pokeapi.co/api/v2/pokemon"
-  let response = await fetch(`${baseUrl}/${pokeNumber}`)
+  const response = await fetch(`${baseUrl}/${pokeNumber}`)
   if (!response.ok)
   {
     throw Error("FUCK")
   }
-  let json = await response.json()
+  const json = await response.json()
   console.log(json)
 }
 
