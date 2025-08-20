@@ -68,8 +68,7 @@ function Mastermind() {
   }
 
   function handleGuess() {
-    if (currentGuess.indexOf(null)>=0)
-      return;
+    if (currentGuess.indexOf(null) >= 0) return;
     const guess = currentGuess as Array<number>;
     const redsCount = guess
       .map((num, i): number => (num === code[i] ? 1 : 0))
@@ -94,11 +93,17 @@ function Mastermind() {
     ]);
   }
 
-  function handleSetPin(pin: number) {
+  function handleSetPin(color: number) {
     const index = currentGuess.indexOf(null);
     if (index === -1) return;
     const newCurrentGuess = currentGuess;
-    newCurrentGuess[index] = pin;
+    newCurrentGuess[index] = color;
+    setCurrentGuess([...newCurrentGuess]);
+  }
+
+  function handleUnsetPin(pin: number) {
+    const newCurrentGuess = currentGuess;
+    newCurrentGuess[pin] = null;
     setCurrentGuess([...newCurrentGuess]);
   }
 
@@ -128,12 +133,12 @@ function Mastermind() {
 
           {/* Current guess input area */}
           <div className="flex">
-            {currentGuess.map((e) => (
+            {currentGuess.map((e, i) => (
               <ColorPeg
-                key={1}
+                key={i}
                 color={`${e !== null ? availableColors[e] : 'bg-gray-800'}`}
                 size="h-12 w-12"
-                onClick={() => {}}
+                onClick={() => handleUnsetPin(i)}
                 cursor={e !== null}
                 className="mx-2"
               />
