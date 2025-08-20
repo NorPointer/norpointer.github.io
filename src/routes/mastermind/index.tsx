@@ -101,7 +101,7 @@ function Mastermind() {
     handleClearCurrentGuess();
   }
 
-  function handleSetPin(color: number) {
+  function handleSetPeg(color: number) {
     const index = currentGuess.indexOf(null);
     if (index === -1) return;
     const newCurrentGuess = currentGuess;
@@ -109,9 +109,9 @@ function Mastermind() {
     setCurrentGuess([...newCurrentGuess]);
   }
 
-  function handleUnsetPin(pin: number) {
+  function handleUnsetPeg(peg: number) {
     const newCurrentGuess = currentGuess;
-    newCurrentGuess[pin] = null;
+    newCurrentGuess[peg] = null;
     setCurrentGuess([...newCurrentGuess]);
   }
 
@@ -141,7 +141,7 @@ function Mastermind() {
                     key={j}
                     color={`${availableColors[e]}`}
                     size="h-12 w-12"
-                    onClick={() => handleUnsetPin(i)}
+                    onClick={() => handleUnsetPeg(i)}
                     className="mx-2"
                   />
                 ))}
@@ -154,7 +154,7 @@ function Mastermind() {
                     key={j}
                     color={'bg-gray-800'}
                     size="h-12 w-12"
-                    onClick={() => handleUnsetPin(i)}
+                    onClick={() => handleUnsetPeg(i)}
                     className="mx-2"
                   />
                 ))}
@@ -169,7 +169,7 @@ function Mastermind() {
                 key={i}
                 color={`${e !== null ? availableColors[e] : 'bg-gray-800'}`}
                 size="h-12 w-12"
-                onClick={() => handleUnsetPin(i)}
+                onClick={() => handleUnsetPeg(i)}
                 cursor={e !== null}
                 className="mx-2"
               />
@@ -227,7 +227,7 @@ function Mastermind() {
                 color={color}
                 size="h-12 w-12"
                 onClick={() => {
-                  handleSetPin(index);
+                  handleSetPeg(index);
                 }}
                 cursor
                 className="hover:scale-110 active:scale-95 transform transition-transform duration-100"
