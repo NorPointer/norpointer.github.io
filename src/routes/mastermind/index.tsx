@@ -36,6 +36,7 @@ function Mastermind() {
     null,
     null,
   ]);
+  const [currentGuessIsEmpty, setCurrentGuessIsEmpty] = useState<boolean>();
   const [guesses, setGuesses] = useState<Array<Guess>>([]);
   const [finished, setFinished] = useState(false);
   const [won, setWon] = useState(false);
@@ -43,6 +44,10 @@ function Mastermind() {
   useEffect(() => {
     checkIfPlayerIsFinished();
   }, [guesses]);
+
+  useEffect(() => {
+    setCurrentGuessIsEmpty(currentGuess.every((el) => el === null));
+  }, [currentGuess]);
 
   function randIntMax(max: number): number {
     return Math.floor(Math.random() * max);
@@ -91,7 +96,7 @@ function Mastermind() {
       ...guesses,
       { code: guess, whites: whitesCount, reds: redsCount },
     ]);
-    setCurrentGuess([null, null, null, null]);
+    handleClearCurrentGuess();
   }
 
   function handleSetPin(color: number) {
@@ -106,6 +111,10 @@ function Mastermind() {
     const newCurrentGuess = currentGuess;
     newCurrentGuess[pin] = null;
     setCurrentGuess([...newCurrentGuess]);
+  }
+
+  function handleClearCurrentGuess() {
+    setCurrentGuess([null, null, null, null]);
   }
 
   return (
@@ -145,9 +154,35 @@ function Mastermind() {
               />
             ))}
           </div>
-          <Button disabled={finished} onClick={handleGuess}>
-            Guess
-          </Button>
+          <div className="grid grid-cols-4 gap-2">
+            <Button
+              className="col-span-3"
+              disabled={finished}
+              onClick={handleGuess}
+            >
+              Guess
+            </Button>
+            <Button
+              className="col-span-1"
+              variant="outline"
+              disabled={currentGuessIsEmpty}
+              onClick={handleClearCurrentGuess}
+            >
+              <svg
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="m18 9-.84 8.398c-.127 1.273-.19 1.909-.48 2.39a2.5 2.5 0 0 1-1.075.973C15.098 21 14.46 21 13.18 21h-2.36c-1.279 0-1.918 0-2.425-.24a2.5 2.5 0 0 1-1.076-.973c-.288-.48-.352-1.116-.48-2.389L6 9m7.5 6.5v-5m-3 5v-5m-6-4h4.615m0 0 .386-2.672c.112-.486.516-.828.98-.828h3.038c.464 0 .867.342.98.828l.386 2.672m-5.77 0h5.77m0 0H19.5" />
+              </svg>
+            </Button>
+          </div>
           {finished ? (
             won ? (
               <div>Smart! You won in {guesses.length} guesses :D</div>
