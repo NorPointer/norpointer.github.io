@@ -37,6 +37,7 @@ function Mastermind() {
     null,
   ]);
   const [currentGuessIsEmpty, setCurrentGuessIsEmpty] = useState<boolean>();
+  const [currentGuessIsFull, setCurrentGuessIsFull] = useState<boolean>();
   const [guesses, setGuesses] = useState<Array<Guess>>([]);
   const [finished, setFinished] = useState(false);
   const [won, setWon] = useState(false);
@@ -46,7 +47,8 @@ function Mastermind() {
   }, [guesses]);
 
   useEffect(() => {
-    setCurrentGuessIsEmpty(currentGuess.every((el) => el === null));
+    setCurrentGuessIsEmpty(currentGuess.every(el => el === null));
+    setCurrentGuessIsFull(currentGuess.every(el => el !== null))
   }, [currentGuess]);
 
   function randIntMax(max: number): number {
@@ -131,12 +133,31 @@ function Mastermind() {
         {/* Game board */}
         <Card className="p-4">
           {/* Previous guesses */}
-          <div className="flex flex-col-reverse justify-end min-h-[400px] max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+          <div className="flex flex-col justify-start min-h-[770px] max-h-[770px] overflow-y-auto pr-2 custom-scrollbar mt-1">
             {guesses.map((guess, i) => (
-              <div key={i} className="flex justify-center">
-                <span className="text-gray-400 pr-2">{guess.code}</span>
-                <span className="pr-2">{guess.whites}</span>
-                <span className="text-red-600">{guess.reds}</span>
+              <div className="flex pb-3" key={i}>
+                {guess.code.map((e, j) => (
+                  <ColorPeg
+                    key={j}
+                    color={`${availableColors[e]}`}
+                    size="h-12 w-12"
+                    onClick={() => handleUnsetPin(i)}
+                    className="mx-2"
+                  />
+                ))}
+              </div>
+            ))}
+            {[...Array(maxGuesses - guesses.length)].map((_, i) => (
+              <div className="flex pb-3" key={guesses.length + i}>
+                {[...Array(4)].map((_, j) => (
+                  <ColorPeg
+                    key={j}
+                    color={'bg-gray-800'}
+                    size="h-12 w-12"
+                    onClick={() => handleUnsetPin(i)}
+                    className="mx-2"
+                  />
+                ))}
               </div>
             ))}
           </div>
@@ -157,7 +178,7 @@ function Mastermind() {
           <div className="grid grid-cols-4 gap-2">
             <Button
               className="col-span-3"
-              disabled={finished}
+              disabled={finished || !currentGuessIsFull}
               onClick={handleGuess}
             >
               Guess
