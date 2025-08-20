@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/secondpage/')({
-  component: RouteComponent,
+  component: PockeDexComponent,
 })
 
 const getPokemon = async (pokeNumber: number) => {
@@ -13,9 +14,13 @@ const getPokemon = async (pokeNumber: number) => {
   }
   const json = await response.json()
   console.log(json)
+  return json
 }
 
-function RouteComponent() {
-  getPokemon(1)
-  return <div>Oles page!</div>
+function PockeDexComponent() {
+  const [pokemon, setPokemon] = useState<string>();
+  useEffect(() => {
+    getPokemon(1).then((value) => setPokemon(JSON.stringify(value)))
+  }, [])
+  return <div>{pokemon}</div>
 }
