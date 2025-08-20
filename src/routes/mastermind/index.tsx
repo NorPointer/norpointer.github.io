@@ -141,7 +141,7 @@ function Mastermind() {
                     key={j}
                     color={`${availableColors[e]}`}
                     size="h-12 w-12"
-                    onClick={() => handleUnsetPeg(i)}
+                    onClick={() => {}}
                     className="mx-2"
                   />
                 ))}
@@ -156,7 +156,7 @@ function Mastermind() {
                     key={j}
                     color={'bg-gray-800'}
                     size="h-12 w-12"
-                    onClick={() => handleUnsetPeg(i)}
+                    onClick={() => {}}
                     className="mx-2"
                   />
                 ))}
