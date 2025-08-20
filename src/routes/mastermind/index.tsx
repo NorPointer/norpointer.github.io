@@ -91,6 +91,7 @@ function Mastermind() {
       ...guesses,
       { code: guess, whites: whitesCount, reds: redsCount },
     ]);
+    setCurrentGuess([null, null, null, null]);
   }
 
   function handleSetPin(color: number) {
